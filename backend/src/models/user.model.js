@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 
 const userSchema = new mongoose.Schema(
   {
@@ -39,6 +40,7 @@ const userSchema = new mongoose.Schema(
     resetPasswordToken: {
       type: String,
     },
+    resetPasswordExpire: Date,
     role: {
       type: String,
       enum: ["user", "admin"],
@@ -89,6 +91,20 @@ userSchema.methods.generateRefreshToken = function () {
       expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
     }
   );
+  z;
+};
+
+userSchema.methods.getResetPasswordToken = function () {
+  // Generationg Token
+  const resetToken = crypto.randomBytes(20).toString("hex");
+  //Hashing and Adding resetPasswordToken to userSchema
+  this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+  this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
+  console.log(this.resetPasswordExpire);
+  return resetToken;
 };
 
 userSchema.plugin(mongooseAggregatePaginate);
