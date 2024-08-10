@@ -3,7 +3,7 @@ import { ApiResponse } from "../utils/apiResponse.util.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.util.js";
 import { ErrorHandler } from "../utils/errorHandler.util.js";
 import { catchAsyncError } from "../middleware/catchAsyncError.middleware.js";
-import { user } from "../models/user.model.js";
+import { User } from "../models/user.model.js";
 import { crop } from "../models/crop.model.js";
 import cloudinary from "cloudinary";
 
@@ -15,7 +15,7 @@ const createCrop = catchAsyncError(async (req, res, next) => {
 
   //check user is authorized to create crop
   const loggeInuser = req.user._id;
-  const loggedInUser = await user.findById(loggeInuser);
+  const loggedInUser = await User.findById(loggeInuser);
   if (loggedInUser.role === "user") {
     return next(new ErrorHandler("You are not authorized to create crop", 401));
   }
