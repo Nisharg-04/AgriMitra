@@ -6,6 +6,7 @@ import Layout from "./layout/layout";
 import SignIn from "./pages/SignIn";
 import Dashboard from "./pages/Dashboard";
 import AddProduct from "./pages/AddProduct";
+import WeatherForcast from "./pages/Weather/WeatherForcast";
 import EventDetails from "./forms/ManageEventForm/EventDetails";
 import Events from "./pages/Events";
 import Marketplace from "./pages/Marketplace";
@@ -41,6 +42,14 @@ function App() {
             element={
               <Layout>
                 <Register />
+              </Layout>
+            }
+          />
+           <Route
+            path="/weather"
+            element={
+              <Layout>
+                <WeatherForcast />
               </Layout>
             }
           />

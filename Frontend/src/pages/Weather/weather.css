@@ -1,0 +1,99 @@
+.App {
+  text-align: center;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 600px;
+  margin: 50px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.app-name {
+  font-size: 3.8rem;
+  color: tomato;
+  margin-bottom: 20px;
+}
+
+.juNRvt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.city-search {
+  padding: 10px;
+  width: 80%;
+  border: 2px solid black;
+  border-radius: 20px;
+  font-size: 1rem;
+  outline: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.city-search:focus {
+  border-color: tomato;
+}
+
+.loading-container {
+  margin-top: 20px;
+}
+
+.error-container {
+  margin-top: 20px;
+  color: tomato;
+  font-size: 1.2rem;
+}
+
+.error-icon {
+  margin-right: 10px;
+}
+
+.weather-info {
+  margin-top: 20px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid tomato;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.city-name h3 {
+  font-size: 1.5rem;
+  color: black;
+}
+
+.city-name span {
+  color: tomato;
+}
+
+.date {
+  font-size: 1.2rem;
+  color: gray;
+  margin-bottom: 20px;
+}
+
+.icon-temp {
+  font-size: 3rem;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-temp img {
+  margin-right: 10px;
+}
+
+.deg {
+  font-size: 2rem;
+  color: black;
+}
+
+.des-wind p {
+  font-size: 1rem;
+  color: black;
+  margin: 5px 0;
+}
