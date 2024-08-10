@@ -1,3 +1,4 @@
+import {ErrorHandler} from "../utils/errorHandler.util.js";
 import { asyncHandler } from "../utils/asyncHandler.util.js";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.model.js";
@@ -26,6 +27,6 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
     // console.log(user);
     next();
   } catch (error) {
-    return next(new ErrorHandler(error?.message || "Invalid access token", 400));
+    return next(new ErrorHandler("Not authorized to access this route", 401));
   }
 });
