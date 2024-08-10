@@ -1,5 +1,5 @@
 
-import Designer from "../assets/Designer.png";
+import Design from "../assets/Design.png";
 
 const HowWorks = () => {
     return (
@@ -26,7 +26,7 @@ const HowWorks = () => {
                     <li>3. Explore Climate and Latest News</li>
                 </ol>
             </div>
-            <img src={Designer} alt="home_illustration2" className="w-1/2 max-sm:w-full" />
+            <img src={Design} alt="home_illustration2" className="w-1/2 max-sm:w-full" />
         </div>
     );
 };

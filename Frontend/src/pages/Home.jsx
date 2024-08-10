@@ -47,14 +47,14 @@ function Home() {
               </Link>
             </div>
           </div>
-          <img
+          {/* <img
             src={chakra3}
             alt="chakra1"
             width={500}
             height={500}
             className="absolute pointer-events-none -left-80 -top-80 max-sm:-left-36 max-sm:-top-56 -z-10 "
             style={{ transform: `rotate(${-rotation}deg)` }}
-          />
+          /> */}
         </div>
         <div className="flex relative">
           <img
@@ -64,14 +64,14 @@ function Home() {
             height={350}
             className="pointer-events-none rounded-bl-[35%] rounded-tr-[35%]"
           />
-          <img
+          {/* <img
             src={chakra2}
             alt="chakra1"
             width={250}
             height={250}
             className="absolute pointer-events-none left-44 -top-20 -z-10"
             style={{ transform: `rotate(${-rotation}deg)` }}
-          />
+          /> */}
         </div>
       </div>
       <HowWorks />
