@@ -38,8 +38,10 @@ app.get("/hi", (req, res) => {
 
 import userRouter from "./routes/user.route.js";
 import cropRouter from "./routes/crop.route.js";
+import cropOrder from "./routes/orderCrop.route.js";
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/crop", cropRouter);
+app.use("/api/v1/cropOrder", cropOrder);
 
 export { app };

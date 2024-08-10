@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
-import { cropCategory } from "../constants.js";
+
 
 const cropSchema = new mongoose.Schema(
   {
     category: {
-      enum: cropCategory,
       type: String,
       required: true,
     },
