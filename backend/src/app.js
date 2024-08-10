@@ -34,7 +34,9 @@ app.get("/hi", (req, res) => {
 
 
 import userRouter from "./routes/user.route.js";
+import cropRouter from "./routes/crop.route.js";
 
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/crop", cropRouter);
 
 export { app };
