@@ -3,10 +3,14 @@ import { useState } from "react";
 import { useAuthContext } from "../context/AuthContext";
 import LogoutButton from "./LogoutButton";
 import logo from "../assets/logo.png";
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
   const [toggle, setToggle] = useState(false);
-  const user = useAuthContext();
+  const { error, loading, isAuthenticated } = useSelector(
+    (state) => state.user
+  );
+
 
   return (
     <div
@@ -76,7 +80,7 @@ const Header = () => {
               Events
             </Link>
 
-            {user ? (
+            {isAuthenticated? (
               <Link to="/sign-in" className="py-1 px-2 hover:text-white">
                 Logout
               </Link>
@@ -97,7 +101,7 @@ const Header = () => {
           <span className="flex w-7 h-1 bg-lightgreen"></span>
         </div>
         <div className="hidden space-x-4 lg:flex md:flex items-center">
-          {user && user.userId ? (
+          {isAuthenticated ? (
             <Link to="/">
               <LogoutButton />
             </Link>

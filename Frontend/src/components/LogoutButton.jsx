@@ -1,31 +1,26 @@
 import { API_URL } from "../api";
 import { useAppContext } from "../context/AppContext";
+import { logout } from "../Slices/UserSlices/LoginSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const LogoutButton = () => {
-	const { showToast } = useAppContext();
-	const logout = async () => {
-		const response = await fetch(`${API_URL}/auth/logout`, {
-			credentials: "include",
-			method: "POST",
-		});
-		if (!response.ok) {
-			throw new Error("Error during logging out!");
-		} else {
-			showToast({ message: "Logged Out!", type: "SUCCESS" });
-			window.location.reload();
-		}
-	};
-	const handleClick = () => {
-		logout();
-	};
-	return (
-		<button
-			onClick={handleClick}
-			className="text-lg bg-lightgreen py-1 px-6 text-white font-semibold font-grotesk rounded-lg  hover:bg-lightred  hover:text-black transition-all"
-		>
-			Logout
-		</button>
-	);
+	const dispatch = useDispatch();
+
+  const { showToast } = useAppContext();
+  const logoutfun = () => {
+    dispatch(logout());
+  };
+  const handleClick = () => {
+    logoutfun();
+  };
+  return (
+    <button
+      onClick={handleClick}
+      className="text-lg bg-lightgreen py-1 px-6 text-white font-semibold font-grotesk rounded-lg  hover:bg-lightred  hover:text-black transition-all"
+    >
+      Logout
+    </button>
+  );
 };
 
 export default LogoutButton;

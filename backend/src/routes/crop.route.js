@@ -21,7 +21,7 @@ router.post(
   createCrop
 );
 
-router.get("/getCrops", verifyJWT, getCrops);
+router.get("/getCrops", getCrops);
 router.put("/updateCrop/:id", verifyJWT, updateCrop);
 router.delete("/deleteCrop/:id", verifyJWT, deleteCrop);
 
