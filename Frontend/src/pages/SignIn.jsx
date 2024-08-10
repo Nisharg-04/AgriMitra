@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
 import React, { useRef, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";;
+import { useDispatch, useSelector } from "react-redux";
 import { useAppContext } from "../context/AppContext";
 import { API_URL } from "../api";
 import { login } from "../Slices/UserSlices/LoginSlice";
@@ -11,13 +11,26 @@ const SignIn = () => {
   const { error, loading, isAuthenticated } = useSelector(
     (state) => state.user
   );
+  const navigate = useNavigate();
+  const redirect = "/";
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate(redirect);
+    }
+    if(error){
+      {
+        alert(error);
+      }
+    }
+  }, [isAuthenticated, error]);
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
-  const navigate = useNavigate();
-  const onSubmit = () => {
+
+  const onSubmit = (e) => {
     e.preventDefault();
     const args = { loginEmail, loginPassword };
+    console.log(args);
     dispatch(login(args));
   };
   return (
@@ -33,21 +46,20 @@ const SignIn = () => {
         {/* Seprator */}
         <div className="h-px my-1 bg-black bg-opacity-50 border-0 w-full"></div>
         <label className="text-lightgray font-grotesk text-md font-bold flex-1">
-          Email
+          Username
           <input
-            type="email"
+            type="text"
+            onChange={(e) => setLoginEmail(e.target.value)}
             className="border rounded w-full py-1 px-2 font-normal"
           />
-          
         </label>
         <label className="text-lightgray font-grotesk text-md font-bold flex-1">
           Password
           <input
             type="password"
             className="border rounded w-full py-1 px-2 font-normal"
-          
+            onChange={(e) => setLoginPassword(e.target.value)}
           />
-        
         </label>
         <span className="flex mx-auto">
           <button

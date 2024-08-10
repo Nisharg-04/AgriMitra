@@ -24,7 +24,7 @@ const Header = () => {
             alt="Logo"
             className="w-12 h-12 max-sm:w-8 max-sm:h-8 mr-2"
           />
-          <span className="lg:text-3xl md:text-3xl">Krushi Mitra</span>
+          <span className="lg:text-3xl md:text-3xl">AgriMitra</span>
         </Link>
         <div
           className={`lg:flex md:flex lg:items-center md:items-center lg:space-x-4 md:space-x-4 md:py-1 lg:py-1 lg:text-base md:text-base lg:text-black md:text-black lg:font-medium font-poppins  md:font-medium hidden

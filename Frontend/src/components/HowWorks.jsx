@@ -1,5 +1,5 @@
 
-import home_illustration2 from "../assets/home_illustration2.png";
+import Designer from "../assets/Designer.png";
 
 const HowWorks = () => {
     return (
@@ -7,7 +7,7 @@ const HowWorks = () => {
             <div className="w-1/2 max-sm:w-full">
                 <div className="flex flex-col max-sm:flex max-sm:items-center">
                     <h1 className="text-3xl text-zinc-700 font-bold font-grotesk max-sm:text-xl">
-                        HOW KRUSHI MITRA WORKS?
+                        HOW AgriMitra WORKS?
                     </h1>
                     <h3 className="mt-2 max-sm:text-base font-semibold font-poppins">
                         TAKE A LOOK AT OUR{" "}
@@ -20,13 +20,13 @@ const HowWorks = () => {
                     <li>1. Sign-up to the platform.</li>
                     <li>
                         2. Discover a diverse range of products and services from local
-                        farmers and artisans..
+                        farmers and Dealers
                     </li>
-                    <li>3. Create or Attend Events.</li>
-                    <li>4. Explore Cultures and Local Art</li>
+
+                    <li>3. Explore Climate and Latest News</li>
                 </ol>
             </div>
-            <img src={home_illustration2} alt="home_illustration2" className="w-1/2 max-sm:w-full" />
+            <img src={Designer} alt="home_illustration2" className="w-1/2 max-sm:w-full" />
         </div>
     );
 };

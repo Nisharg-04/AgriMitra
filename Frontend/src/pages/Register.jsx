@@ -31,7 +31,12 @@ const Register = () => {
 
   const [avatar, setAvatar] = useState(null);
   const navigate = useNavigate();
-
+const redirect="/";
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate(redirect);
+    }
+  }, [isAuthenticated, redirect]);
   const registerSubmit = (e) => {
     e.preventDefault();
 

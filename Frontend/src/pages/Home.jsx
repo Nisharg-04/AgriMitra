@@ -21,12 +21,12 @@ function Home() {
       <div className="flex items-center justify-between mt-10  max-sm:flex-col max-sm:gap-10">
         <div className="flex-col w-1/2 max-sm:w-full relative">
           <h1 className="text-5xl font-bold max-sm:text-2xl bg-clip-text text-transparent bg-gradient-to-r from-lightgreen via-lightyellow to-lightred font-grotesk">
-            Welcome to Krushi-Mitra
+            Welcome to AgriMitra
           </h1>
 
           <div className="flex flex-col gap-2">
             <p className="text-xl max-sm:text-base font-poppins font-normal">
-              Krushi-Mitra is a transformative platform bridging rural-urban
+              AgriMitra is a transformative platform bridging rural-urban
               divides by facilitating event connections. Our &apos;Community
               Catalyst &apos; feature empowers users to list beneficial events,
               fostering collaboration between government, urban, and rural

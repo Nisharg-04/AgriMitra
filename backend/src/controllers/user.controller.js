@@ -87,8 +87,10 @@ const loginUser = asyncHandler(async (req, res, next) => {
   //check password
   //generate access and refresh token
   //return response
+  // console.log(req.body);
 
   const { userName, password } = req.body;
+  
 
   if (!userName || !password) {
     return next(new ErrorHandler("Please provide username and password", 400));

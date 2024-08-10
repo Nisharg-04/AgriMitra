@@ -17,7 +17,7 @@ const Footer = () => {
             alt="star"
             className="mx-2 pointer-events-none max-sm:w-8 max-sm:h-8  "
           />
-          Krushi-Mitra
+         AgriMitra
           <img
             src={star}
             width={24}
@@ -33,7 +33,7 @@ const Footer = () => {
             alt="star"
             className="mx-2 pointer-events-none max-sm:w-8 max-sm:h-8  "
           />
-          Krushi-Mitra
+          AgriMitra
           <img
             src={star}
             width={24}
@@ -49,7 +49,7 @@ const Footer = () => {
             alt="star"
             className="mx-2 pointer-events-none max-sm:w-8 max-sm:h-8  "
           />
-          Krushi-Mitra
+         ArgiMitra
           <img
             src={star}
             width={24}
@@ -65,7 +65,7 @@ const Footer = () => {
             alt="star"
             className="mx-2 pointer-events-none max-sm:w-8 max-sm:h-8  "
           />
-          Krushi-Mitra
+          AgriMitra
           <img
             src={star}
             width={24}
@@ -98,7 +98,7 @@ const Footer = () => {
                 alt="logo"
                 className="w-8 h-8 max-sm:w-6 max-sm:h-6"
               />
-              Krushi Mitra
+             AgriMitra
             </Link>
           </div>
           {/* Quick Links */}
@@ -140,7 +140,7 @@ const Footer = () => {
         <div className="flex justify-between w-full items-center py-4">
           {/* Copy right */}
           <div className="text-base font-poppins text-lightgray max-sm:text-xs">
-            ©2024 Krushi Mitra
+            ©2024 AgriMitra
           </div>
           {/* Social Media */}
           <div className="flex gap-1">
