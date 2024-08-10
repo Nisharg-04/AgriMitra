@@ -4,6 +4,7 @@ import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.util.js";
 import { ErrorHandler } from "../utils/errorHandler.util.js";
 import { catchAsyncError } from "../middleware/catchAsyncError.middleware.js";
+import  cloudinary  from "cloudinary";
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {
@@ -32,11 +33,11 @@ const registerUser = catchAsyncError(async (req, res, next) => {
   // remove password, refreshToken from response
   // check for userCreation
   // return response
-
+  // console.log(req.body);
   const { email, userName, password, phoneNumber, displayName } = req.body;
 
   if (!email || !userName || !password || !phoneNumber || !displayName) {
-    throw new ApiError(400, "Please provide all required fields");
+   return next(new ErrorHandler("Please Provide All The Feilds", 400));
   }
 
   const existedUser = await User.findOne({
@@ -46,16 +47,14 @@ const registerUser = catchAsyncError(async (req, res, next) => {
   if (existedUser) {
     return next(new ErrorHandler("User already exits", 400));
   }
+  // const myCloud = await uploadOnCloudinary(req.body.avatar);
+  const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    folder: "home",
+    width: 150,
+    crop: "scale",
+  });
 
-  const avatarLocalPath = req.files?.avatar[0]?.path;
-
-  if (!avatarLocalPath) {
-    return next(new ErrorHandler("Please provide an avatar", 400));
-  }
-
-  const avatar = await uploadOnCloudinary(avatarLocalPath);
-
-  if (!avatar) {
+  if (!myCloud) {
     return next(new ErrorHandler("Avatar upload failed", 500));
   }
 
@@ -65,7 +64,7 @@ const registerUser = catchAsyncError(async (req, res, next) => {
     password,
     phoneNumber,
     displayName,
-    avatar: avatar.url,
+    avatar: myCloud.url,
   });
 
   const createdUser = await User.findById(user._id).select(
