@@ -3,6 +3,7 @@ import { ApiResponse } from "../utils/apiResponse.util.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.util.js";
 import { ErrorHandler } from "../utils/errorHandler.util.js";
 import { catchAsyncError } from "../middleware/catchAsyncError.middleware.js";
+import { crop } from "../models/crop.model.js";
 
 const createCrop = catchAsyncError(async (req, res,next) => {
     // get crop data from request body
@@ -13,9 +14,9 @@ const createCrop = catchAsyncError(async (req, res,next) => {
     if (!category || !description || !price || !stockQuantity) {
         return next(new ErrorHandler("Please provide all required fields", 400));
     }
+
     const existedCrop = await crop.findOne({ category });
     if (existedCrop) {
-        
         return next(new ErrorHandler("Crop already exits", 400));
     }
 
@@ -28,7 +29,7 @@ const createCrop = catchAsyncError(async (req, res,next) => {
         return next(new ErrorHandler("Photo upload failed", 500));
     }
 
-    const crop = await crop.create({
+    const cropProduct = await crop.create({
         category,
         description,
         price,
@@ -36,50 +37,55 @@ const createCrop = catchAsyncError(async (req, res,next) => {
         stockQuantity,
         producer: req.user._id,
     });
-    const createdCrop = await findById(crop._id);
+
+    const createdCrop = await crop.findById(cropProduct._id);
     if (!createCrop) {
         return next(new ErrorHandler("Crop creation failed", 500));
     }
-    return res.status(201).json(new ApiResponse(201, "Crop created", crop));
+    return res.status(201).json(new ApiResponse(201, "Crop created", cropProduct));
 });
 
-
-const getCrops = asyncHandler(async (req, res) => {
-    // get all crops
-    // return response
-
-    const crops = await Crop.find();
-
+const getCrops = catchAsyncError(async (req, res,next) => {
+    const producer=req.user._id;
+    
+    const crops = await crop.find({producer});
+    // console.log(req.user); 
+    // console.log(req.user._id); 
     return res.status(200).json(new ApiResponse(200, "All crops", crops));
 });
 
-const updateCrop = asyncHandler(async (req, res) => {
-    // get crop id from request params
-    // get crop data from request body
-    // find crop by id and update
-    // return response
-
+const updateCrop = catchAsyncError(async (req, res,next) => {
+    
+    const { category, description, price, stockQuantity } = req.body;
     const cropId = req.params.id;
-    const cropData = req.body;
-
-    const crop = await Crop.findByIdAndUpdate(cropId, cropData, {
-        new: true,
-    });
-
-    return res.status(200).json(new ApiResponse(200, "Crop updated", crop));
+    const cropDate=await crop.findById(cropId);
+    if(!cropDate){
+        return next(new ErrorHandler("Crop not found", 401));
+    }
+    const cropBeforeChange=cropDate;
+    cropDate.category=category||cropDate.category;
+    cropDate.description=description||cropDate.description;
+    cropDate.price=price||cropDate.price;
+    cropDate.stockQuantity=stockQuantity||stockQuantity;
+    const updatedCrop=await cropDate.save();
+    
+    if(updateCrop==cropBeforeChange){
+        return next(new ErrorHandler("Product not updated",401));
+    }
+    return res.status(200).json(new ApiResponse(200, "Crop updated", updatedCrop));
 })
 
-const deleteCrop = asyncHandler(async (req, res) => {
+const deleteCrop = catchAsyncError(async (req, res,next) => {
     // get crop id from request params
     // find crop by id and delete
     // return response
-
     const cropId = req.params.id;
 
-    await Crop.findByIdAndDelete(cropId);
-
+    const cropDelete=await crop.findByIdAndDelete(cropId);
+    if(!cropDelete){
+        return next(new ErrorHandler("Crop not found", 404));
+    }
     return res.status(200).json(new ApiResponse(200, "Crop deleted"));
 });
 
 export { createCrop, getCrops, updateCrop, deleteCrop };
-

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { cropCategory } from "../constants";
+import { cropCategory } from "../constants.js";
 
 const cropSchema = new mongoose.Schema(
   {
@@ -21,7 +21,7 @@ const cropSchema = new mongoose.Schema(
       required: true,
     },
     stockQuantity: {
-      type: string,
+      type: String,
       required: true,
     },
     producer: {

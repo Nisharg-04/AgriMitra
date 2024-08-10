@@ -7,13 +7,13 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
   try {
     const token = req.cookies?.accessToken;
     
-    console.log(token);
+    // console.log(token); 
     if (!token) {
       return next(new ErrorHandler("Unauthorized request", 400));
     }
     
     const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    
+  
     const user = await User.findById(decodedToken._id).select(
       "-password -refreshToken"
     );
@@ -23,7 +23,7 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
     }
     
     req.user = user;
-    
+    // console.log(user);
     next();
   } catch (error) {
     return next(new ErrorHandler(error?.message || "Invalid access token", 400));

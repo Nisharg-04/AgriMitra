@@ -11,18 +11,18 @@ import { upload } from "../middleware/multer.middleware.js";
 const router = Router();
 router.post(
   "/createCrop",
-  verifyJWT,
   upload.fields([
     {
       name: "photo",
       maxCount: 1,
     },
   ]),
+  verifyJWT,
   createCrop
 );
 
-router.get("/", getCrops);
-router.put("/:id", verifyJWT, updateCrop);
-router.delete("/:id", verifyJWT, deleteCrop);
+router.get("/getCrops", verifyJWT, getCrops);
+router.put("/updateCrop/:id", verifyJWT, updateCrop);
+router.delete("/deleteCrop/:id", verifyJWT, deleteCrop);
 
 export default router;
