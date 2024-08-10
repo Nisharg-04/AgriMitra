@@ -46,9 +46,9 @@ const createCrop = catchAsyncError(async (req, res,next) => {
 });
 
 const getCrops = catchAsyncError(async (req, res,next) => {
-    const producer=req.user._id;
+    // const producer=req.user._id;
     
-    const crops = await crop.find({producer});
+    const crops = await crop.find();
     // console.log(req.user); 
     // console.log(req.user._id); 
     return res.status(200).json(new ApiResponse(200, "All crops", crops));
