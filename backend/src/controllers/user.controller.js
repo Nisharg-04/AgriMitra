@@ -6,6 +6,7 @@ import { ErrorHandler } from "../utils/errorHandler.util.js";
 import { catchAsyncError } from "../middleware/catchAsyncError.middleware.js";
 import { sendEmail } from "../utils/sendEmail.util.js";
 import crypto from "crypto";
+import  cloudinary  from "cloudinary";
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {
@@ -34,11 +35,11 @@ const registerUser = catchAsyncError(async (req, res, next) => {
   // remove password, refreshToken from response
   // check for userCreation
   // return response
-
+  // console.log(req.body);
   const { email, userName, password, phoneNumber, displayName } = req.body;
 
   if (!email || !userName || !password || !phoneNumber || !displayName) {
-    return next(new ErrorHandler("Please provide all fields", 400));
+   return next(new ErrorHandler("Please Provide All The Feilds", 400));
   }
 
   const existedUser = await User.findOne({
@@ -48,16 +49,14 @@ const registerUser = catchAsyncError(async (req, res, next) => {
   if (existedUser) {
     return next(new ErrorHandler("User already exits", 400));
   }
+  // const myCloud = await uploadOnCloudinary(req.body.avatar);
+  const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    folder: "home",
+    width: 150,
+    crop: "scale",
+  });
 
-  const avatarLocalPath = req.files?.avatar[0]?.path;
-
-  if (!avatarLocalPath) {
-    return next(new ErrorHandler("Please provide an avatar", 400));
-  }
-
-  const avatar = await uploadOnCloudinary(avatarLocalPath);
-
-  if (!avatar) {
+  if (!myCloud) {
     return next(new ErrorHandler("Avatar upload failed", 500));
   }
 
@@ -67,7 +66,7 @@ const registerUser = catchAsyncError(async (req, res, next) => {
     password,
     phoneNumber,
     displayName,
-    avatar: avatar.url,
+    avatar: myCloud.url,
   });
 
   const createdUser = await User.findById(user._id).select(
@@ -90,8 +89,10 @@ const loginUser = asyncHandler(async (req, res, next) => {
   //check password
   //generate access and refresh token
   //return response
+  // console.log(req.body);
 
   const { userName, password } = req.body;
+  
 
   if (!userName || !password) {
     return next(new ErrorHandler("Please provide username and password", 400));
