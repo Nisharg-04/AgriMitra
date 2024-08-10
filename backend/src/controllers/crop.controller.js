@@ -5,6 +5,8 @@ import { ErrorHandler } from "../utils/errorHandler.util.js";
 import { catchAsyncError } from "../middleware/catchAsyncError.middleware.js";
 import { user } from "../models/user.model.js";
 import { crop } from "../models/crop.model.js";
+import cloudinary from "cloudinary";
+
 
 const createCrop = catchAsyncError(async (req, res, next) => {
   // get crop data from request body
@@ -28,25 +30,33 @@ const createCrop = catchAsyncError(async (req, res, next) => {
   //     return next(new ErrorHandler("Crop already exits", 400));
   // }
 
-  const photoLocalPath = req.files?.photo[0]?.path;
-  if (!photoLocalPath) {
-    return next(
-      new ErrorHandler("Please provide an Photo of the product", 400)
-    );
-  }
-  const photo = await uploadOnCloudinary(photoLocalPath);
-  if (!photo) {
-    return next(new ErrorHandler("Photo upload failed", 500));
-  }
+    // const photoLocalPath = req.files?.photo[0]?.path;
+    // if (!photoLocalPath) {
+    //     return next(new ErrorHandler("Please provide an Photo of the product", 400));
+    // }
+    // const photo = await uploadOnCloudinary(photoLocalPath);
+    // if (!photo) {
+    //     return next(new ErrorHandler("Photo upload failed", 500));
+    // }
 
-  const cropProduct = await crop.create({
-    category,
-    description,
-    price,
-    photo: photo.url,
-    stockQuantity,
-    producer: req.user._id,
-  });
+    const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        folder: "home",
+        width: 150,
+        crop: "scale",
+      });
+    
+      if (!myCloud) {
+        return next(new ErrorHandler("Avatar upload failed", 500));
+      }
+
+    const cropProduct = await crop.create({
+        category,
+        description,
+        price,
+        photo: myCloud.url,
+        stockQuantity,
+        producer: req.user._id,
+    });
 
   const createdCrop = await crop.findById(cropProduct._id);
   if (!createCrop) {
@@ -57,13 +67,9 @@ const createCrop = catchAsyncError(async (req, res, next) => {
     .json(new ApiResponse(201, "Crop created", cropProduct));
 });
 
-const getCrops = catchAsyncError(async (req, res, next) => {
-  // const producer=req.user._id;
-
-  const crops = await crop.find();
-  // console.log(req.user);
-  // console.log(req.user._id);
-  return res.status(200).json(new ApiResponse(200, "All crops", crops));
+const getCrops = catchAsyncError(async (req, res,next) => {
+    const crops = await crop.find();
+    return res.status(200).json(new ApiResponse(200, "All crops", crops));
 });
 
 const updateCrop = catchAsyncError(async (req, res, next) => {
