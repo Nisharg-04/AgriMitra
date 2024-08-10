@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 const ProductCard = ({ data }) => {
-  if (!data || !data.imageUrl || data.imageUrl.length === 0) {
+  console.log(data);
+  if (!data) {
     return (
       <div className="w-full h-[300px]">
         <span className=" w-full h-full object-cover object-center">
@@ -15,7 +16,7 @@ const ProductCard = ({ data }) => {
     <div className="grid grid-row-1 max-sm:grid-cols-1 border border-slate-300 rounded-lg p-4 gap-8  ">
       <div className="w-full h-[300px] max-sm:h-fit">
         <img
-          src={data.imageUrl[0]}
+          src={data.photo}
           className="rounded-md w-full h-full max-sm:h-fit object-cover object-center"
         />
       </div>
@@ -31,7 +32,7 @@ const ProductCard = ({ data }) => {
             to={`/marketplace/details/${data._id}`}
             className=" flex gap-1 font-grotesk text-xl  cursor-pointer"
           ><h2 className="text-lightred font-semibold">Product Name: </h2>
-            {data.name}
+            {data.category}
           </Link>
         </div>
         <div className="border border-lightgray rounded-lg h-full p-4">

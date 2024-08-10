@@ -1,0 +1,53 @@
+.App {
+    font-family: Arial, sans-serif;
+    background-color: white;
+    color: black;
+  }
+  
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  .news-item {
+    background-color: lightgreen;
+    border: 2px solid tomato;
+    border-radius: 10px;
+    margin: 15px;
+    padding: 20px;
+    width: 30%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .news-item img {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+  
+  .news-item h2 {
+    color: black;
+  }
+  
+  .news-item p {
+    color: black;
+  }
+  
+  .news-item a {
+    color: tomato;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .news-item a:hover {
+    text-decoration: underline;
+  }
+  
+  .latest-news {
+    text-align: center;
+    color: tomato;
+    margin: 20px 0px;
+    font-size: 3rem;
+    font-weight: bold;
+  }
+  

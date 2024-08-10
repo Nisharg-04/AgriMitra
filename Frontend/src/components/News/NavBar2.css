@@ -1,0 +1,27 @@
+.navbar2 {
+    background-color: lightgreen;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.navbar2 ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.navbar2 li {
+    margin: 0 15px;
+}
+
+.navbar2 a {
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.navbar2 a:hover {
+    color: tomato;
+}

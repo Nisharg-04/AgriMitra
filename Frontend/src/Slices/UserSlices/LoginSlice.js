@@ -31,6 +31,7 @@ export const register = createAsyncThunk("register", async (args) => {
   const config = { headers: { "Content-Type": "application/json" } };
   const { data } = await axios.post(`/api/v1/user/register`, args, config);
   try {
+    // console.log(data);
     return data;
   } catch (error) {
     return error;
@@ -39,7 +40,7 @@ export const register = createAsyncThunk("register", async (args) => {
 
 export const logout = createAsyncThunk("logout", async (args) => {
   console.log("sfg");
-  await axios.get(`api/v1/user/logout`);
+  await axios.post(`api/v1/user/logout`);
   
   try {
     return true;
@@ -62,7 +63,7 @@ const userSlice = createSlice({
     });
     builder.addCase(login.fulfilled, (state, action) => {
       state.loading = false;
-      state.user = action.payload.user;
+      state.user = action.payload.data.user;
       state.isAuthenticated = true;
     });
     builder.addCase(login.rejected, (state, action) => {
@@ -88,7 +89,7 @@ const userSlice = createSlice({
     });
     builder.addCase(register.fulfilled, (state, action) => {
       state.loading = false;
-      state.user = action.payload.user;
+      state.user = action.payload.data;
       state.isAuthenticated = true;
     });
     builder.addCase(register.rejected, (state, action) => {

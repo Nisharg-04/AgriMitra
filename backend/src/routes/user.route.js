@@ -30,7 +30,7 @@ router.post(
 
 router.post("/login", loginUser);
 
-router.post("/logout", verifyJWT, logoutUser);
+router.post("/logout",logoutUser);
 
 router.post("/forgotpassword", forgotPassword);
 

@@ -6,7 +6,7 @@ import { ErrorHandler } from "../utils/errorHandler.util.js";
 import { catchAsyncError } from "../middleware/catchAsyncError.middleware.js";
 import { sendEmail } from "../utils/sendEmail.util.js";
 import crypto from "crypto";
-import  cloudinary  from "cloudinary";
+import cloudinary from "cloudinary";
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {
@@ -39,7 +39,7 @@ const registerUser = catchAsyncError(async (req, res, next) => {
   const { email, userName, password, phoneNumber, displayName } = req.body;
 
   if (!email || !userName || !password || !phoneNumber || !displayName) {
-   return next(new ErrorHandler("Please Provide All The Feilds", 400));
+    return next(new ErrorHandler("Please Provide All The Feilds", 400));
   }
 
   const existedUser = await User.findOne({
@@ -92,7 +92,6 @@ const loginUser = asyncHandler(async (req, res, next) => {
   // console.log(req.body);
 
   const { userName, password } = req.body;
-  
 
   if (!userName || !password) {
     return next(new ErrorHandler("Please provide username and password", 400));
@@ -148,23 +147,33 @@ const logoutUser = asyncHandler(async (req, res, next) => {
   // clear cookies
   // return response
 
-  const user = req.user;
-
-  if (!user) {
-    return next(new ErrorHandler("User not found", 404));
-  }
-
-  user.refreshToken = null;
-
-  await user.save({
-    validateBeforeSave: false,
+  res.cookie("refreshToken", null, {
+    expires: new Date(Date.now()),
+    httpOnly: true,
   });
 
-  res
-    .clearCookie("refreshToken")
-    .clearCookie("accessToken")
-    .status(200)
-    .json(new ApiResponse(200, null, "User logged out successfully"));
+  res.status(200).json({
+    success: true,
+    message: "Logged Out Succesfully",
+  });
+
+  // const user = req.user;
+
+  // if (!user) {
+  //   return next(new ErrorHandler("User not found", 404));
+  // }
+
+  // user.refreshToken = null;
+
+  // await user.save({
+  //   validateBeforeSave: false,
+  // });
+
+  // res
+  //   .clearCookie("refreshToken")
+  //   .clearCookie("accessToken")
+  //   .status(200)
+  //   .json(new ApiResponse(200, null, "User logged out successfully"));
 });
 
 const changePassword = asyncHandler(async (req, res, next) => {
@@ -330,7 +339,7 @@ const resetPassword = catchAsyncError(async (req, res, next) => {
       )
     );
   }
-  if(!req?.body?.password || !req?.body?.confirmPassword){
+  if (!req?.body?.password || !req?.body?.confirmPassword) {
     return next(new ErrorHandler(`Please Provide Password`, 404));
   }
   if (req.body.password !== req.body.confirmPassword) {

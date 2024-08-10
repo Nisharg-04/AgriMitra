@@ -52,12 +52,12 @@ const Header = () => {
           >
             Marketplace
           </Link>
-          <Link
-            to="/events"
-            className="py-1 px-2  hover:text-lightyellow ease-in transition-all "
-          >
-            Events
-          </Link>
+          <Link to="/news" className="py-1 px-2  hover:text-lightyellow ease-in transition-all ">
+              News
+            </Link>
+            <Link to="/weather" className="py-1 px-2  hover:text-lightyellow ease-in transition-all ">
+              Weather 
+            </Link>
         </div>
         {toggle && toggle ? (
           <div
@@ -76,30 +76,37 @@ const Header = () => {
             <Link to="/marketplace" className="py-1 px-2 hover:text-white ">
               Marketplace
             </Link>
-            <Link to="/events" className="py-1 px-2 hover:text-white ">
-              Events
+            <Link to="/news" className="py-1 px-2 hover:text-white ">
+              News
+            </Link>
+            <Link to="/weather" className="py-1 px-2 hover:text-white ">
+              Weather 
             </Link>
 
             {isAuthenticated? (
-              <Link to="/sign-in" className="py-1 px-2 hover:text-white">
-                Logout
-              </Link>
+              <Link to="/">
+              <LogoutButton />
+            </Link>
             ) : (
-              <Link to="/sign-in" className="py-1 px-2 text-white">
-                Sign In
-              </Link>
+              <Link
+              to="/sign-in"
+              className="text-lg bg-lightgreen py-1 px-6 text-white font-semibold font-grotesk
+              rounded-lg  hover:bg-lightred  hover:text-white transition-all"
+            >
+              Sign In
+            </Link>
             )}
           </div>
         ) : null}
 
-        <div
+        {/* <div
           onClick={() => setToggle(!toggle)}
           className="flex items-center gap-1 flex-col lg:hidden md:hidden cursor-pointer"
         >
           <span className="flex w-7 h-1 bg-lightgreen"></span>
           <span className="flex w-7 h-1 bg-lightgreen"></span>
           <span className="flex w-7 h-1 bg-lightgreen"></span>
-        </div>
+        </div> */}
         <div className="hidden space-x-4 lg:flex md:flex items-center">
           {isAuthenticated ? (
             <Link to="/">

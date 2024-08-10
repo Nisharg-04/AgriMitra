@@ -22,7 +22,7 @@ const EventDetails = () => {
 	const minDate = new Date();
 	const maxDate = new Date();
 	maxDate.setFullYear(maxDate.getFullYear() + 1);
-	const { showToast } = useAuthContext();
+	// const { showToast } = useAuthContext();	
 	const onSubmit = handleSubmit(async (data) => {
 		console.log(data);
 		const dateStr = data.eventDate.toISOString();

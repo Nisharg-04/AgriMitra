@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { API_URL } from "../api";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [userData, setUserData] = useState([]);
-
-  useEffect(() => {
-    fetchUserData();
-  }, []);
+  const navigate = useNavigate(); 
+  const { user, error, loading, isAuthenticated } = useSelector(
+    (state) => state.user
+  );
 
   const fetchUserData = async () => {
     const response = await fetch(`${API_URL}/users/profile`, {
@@ -20,8 +22,11 @@ const Dashboard = () => {
     setUserData(data.user);
     console.log(data.user);
   };
-  if (!userData) {
-    return <span>Please login first</span>;
+  if (!isAuthenticated) {
+    
+    return   <h1 className="text-3xl font-bold font-grotesk text-lightgreen max-sm:text-3xl">
+    Please Login To Continue
+  </h1>
   }
 
   return (
@@ -50,7 +55,7 @@ const Dashboard = () => {
           <div className="flex flex-col gap-1 items-start">
             <img
               className="bg-gray-300 h-40 rounded-xl w-40 object-cover object-center "
-              src="https://icon-library.com/images/default-profile-icon/default-profile-icon-24.jpg"
+              src={user.avatar}
             />
             <p className="text-sm font-grotesk text-red-600">*user avatar</p>
           </div>
@@ -59,25 +64,25 @@ const Dashboard = () => {
               <span className="capitalize text-lightgray font-grotesk font-bold text-xl">
                 Username:
               </span>{" "}
-              {userData.username}
+              {user.displayName}
             </p>
             <p className="text-xl">
               <span className="capitalize text-lightgray font-grotesk font-bold text-xl">
                 Email:
               </span>{" "}
-              {userData.email}
+              {user.email}
             </p>
             <p className="text-xl">
               <span className="capitalize text-lightgray font-grotesk font-bold text-xl">
-                First Name:
+                Phone Number:
               </span>{" "}
-              {userData.firstName}
+              {user.phoneNumber}
             </p>
             <p className="text-xl">
               <span className="capitalize text-lightgray font-grotesk font-bold text-xl">
-                Last Name:
+                Role:
               </span>{" "}
-              {userData.lastName}
+              {user.role}
             </p>
           </div>
         </div>

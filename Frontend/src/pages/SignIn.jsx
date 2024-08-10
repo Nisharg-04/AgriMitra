@@ -19,7 +19,7 @@ const SignIn = () => {
     }
     if(error){
       {
-        alert(error);
+        // alert(error);
       }
     }
   }, [isAuthenticated, error]);
