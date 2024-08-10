@@ -29,8 +29,8 @@ const Register = () => {
 
   //   const { displayName, email, password, userName, phoneNumber } = user;
 
-  const [avatar, setAvatar] = useState(null);
-  const navigate = useNavigate();
+    const [avatar, setAvatar] = useState(null);
+    const navigate = useNavigate();
 const redirect="/";
   useEffect(() => {
     if (isAuthenticated) {

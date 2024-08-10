@@ -12,7 +12,6 @@ import Marketplace from "./pages/Marketplace";
 import SingleEvent from "./pages/SingleEvent";
 import Product from "./pages/Product";
 import { AppContextProvider } from "./context/AppContext";
-import LatestNews from "./components/LatestNews";
 import NavBar1 from "./components/News/NavBar1";
 import News from "./components/News/News";
 
