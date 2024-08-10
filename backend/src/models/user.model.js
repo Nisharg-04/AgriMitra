@@ -40,6 +40,7 @@ const userSchema = new mongoose.Schema(
     resetPasswordToken: {
       type: String,
     },
+    resetPasswordExpire: Date,
     role: {
       type: String,
       enum: ["user", "admin"],
@@ -89,7 +90,8 @@ userSchema.methods.generateRefreshToken = function () {
     {
       expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
     }
-  );z
+  );
+  z;
 };
 
 userSchema.methods.getResetPasswordToken = function () {
@@ -101,6 +103,7 @@ userSchema.methods.getResetPasswordToken = function () {
     .update(resetToken)
     .digest("hex");
   this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
+  console.log(this.resetPasswordExpire);
   return resetToken;
 };
 

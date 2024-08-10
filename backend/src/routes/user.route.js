@@ -32,7 +32,7 @@ router.post("/logout", verifyJWT, logoutUser);
 
 router.post("/forgotpassword", forgotPassword);
 
-router.put("/resetpassword/:resetToken", resetPassword);
+router.put("/resetpassword/:token", resetPassword);
 
 router.put("/changepassword", verifyJWT, changePassword);
 

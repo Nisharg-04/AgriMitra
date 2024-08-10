@@ -4,6 +4,8 @@ import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.util.js";
 import { ErrorHandler } from "../utils/errorHandler.util.js";
 import { catchAsyncError } from "../middleware/catchAsyncError.middleware.js";
+import { sendEmail } from "../utils/sendEmail.util.js";
+import crypto from "crypto";
 
 const generateAccessAndRefreshToken = async (userId) => {
   try {
@@ -171,7 +173,14 @@ const changePassword = asyncHandler(async (req, res, next) => {
   // update password
   // return response
 
-  const user = req.user;
+  let user = req.user;
+
+  if (!user) {
+    return next(new ErrorHandler("User not found", 404));
+  }
+
+  user = await User.findById(user._id);
+
   const { oldPassword, newPassword } = req.body;
 
   if (!oldPassword || !newPassword) {
@@ -179,6 +188,7 @@ const changePassword = asyncHandler(async (req, res, next) => {
   }
 
   const isPasswordMatch = await user.isPasswordCorrect(oldPassword);
+  console.log("Here");
 
   if (!isPasswordMatch) {
     return next(new ErrorHandler("Invalid credentials", 401));
@@ -265,13 +275,20 @@ const getProfile = asyncHandler(async (req, res, next) => {
 });
 
 const forgotPassword = asyncHandler(async (req, res, next) => {
+  const email = req?.body?.email;
+
+  if (!email) {
+    return next(new ErrorHandler("email is required", 404));
+  }
+
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
     return next(new ErrorHandler(`User Not Found`, 404));
   }
   // Get Reset Password Token
-
   const resetToken = user.getResetPasswordToken();
+  user.resetPasswordToken = resetToken;
+  user.resetPasswordExpire = Date.now() + 30 * 60 * 1000;
   await user.save({ validateBeforeSave: false });
   const resetPasswordUrl = `${req.protocol}://${req.get(
     "host"
@@ -298,11 +315,8 @@ const forgotPassword = asyncHandler(async (req, res, next) => {
 
 const resetPassword = catchAsyncError(async (req, res, next) => {
   // creating token hash
-  const resetPasswordToken = crypto
-    .createHash("sha256")
-    .update(req.params.token)
-    .digest("hex");
 
+  const resetPasswordToken = req.params.token;
   const user = await User.findOne({
     resetPasswordToken,
     resetPasswordExpire: { $gt: Date.now() },
@@ -315,6 +329,9 @@ const resetPassword = catchAsyncError(async (req, res, next) => {
       )
     );
   }
+  if(!req?.body?.password || !req?.body?.confirmPassword){
+    return next(new ErrorHandler(`Please Provide Password`, 404));
+  }
   if (req.body.password !== req.body.confirmPassword) {
     return next(new ErrorHandler(`Password Dosen't Matched`, 404));
   }
@@ -322,7 +339,10 @@ const resetPassword = catchAsyncError(async (req, res, next) => {
   user.resetPasswordToken = undefined;
   user.resetPasswordExpire = undefined;
   await user.save();
-  sendToken(user, 200, res);
+  res.status(200).json({
+    success: true,
+    message: `Password Updated Successfully`,
+  });
 });
 
 export {
