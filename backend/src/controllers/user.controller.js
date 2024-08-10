@@ -36,7 +36,7 @@ const registerUser = catchAsyncError(async (req, res, next) => {
   const { email, userName, password, phoneNumber, displayName } = req.body;
 
   if (!email || !userName || !password || !phoneNumber || !displayName) {
-    throw new ApiError(400, "Please provide all required fields");
+    return next(new ErrorHandler("Please provide all fields", 400));
   }
 
   const existedUser = await User.findOne({

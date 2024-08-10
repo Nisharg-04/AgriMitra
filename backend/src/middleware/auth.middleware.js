@@ -1,4 +1,4 @@
-import { ApiError } from "../utils/ApiError.js";
+import {ErrorHandler} from "../utils/errorHandler.util.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.model.js";
@@ -8,7 +8,7 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
     const token = req.cookies?.accessToken;
 
     if (!token) {
-      throw new ApiError(401, "Unauthorized request");
+      return next(new ErrorHandler("Accesstoken not found", 401));
     }
 
     const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
@@ -19,13 +19,13 @@ export const verifyJWT = asyncHandler(async (req, res, next) => {
     );
 
     if (!user) {
-      throw new ApiError(401, "Invalid access token");
+      return next(new ErrorHandler("User not found", 404));
     }
 
     req.user = user;
 
     next();
   } catch (error) {
-    throw new ApiError(401, error?.message || "Invalid access token");
+    return next(new ErrorHandler("Not authorized to access this route", 401));
   }
 });
