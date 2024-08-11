@@ -14,11 +14,11 @@ const createCrop = catchAsyncError(async (req, res, next) => {
   // return response
 
   //check user is authorized to create crop
-  const loggeInuser = req.user._id;
-  const loggedInUser = await User.findById(loggeInuser);
-  if (loggedInUser.role === "user") {
-    return next(new ErrorHandler("You are not authorized to create crop", 401));
-  }
+  // const loggeInuser = req.user._id;
+  // const loggedInUser = await User.findById(loggeInuser);
+  // if (loggedInUser.role === "user") {
+  //   return next(new ErrorHandler("You are not authorized to create crop", 401));
+  // }
 
   const { category, description, price, stockQuantity } = req.body;
   if (!category || !description || !price || !stockQuantity) {
@@ -59,7 +59,7 @@ const createCrop = catchAsyncError(async (req, res, next) => {
     });
 
   const createdCrop = await crop.findById(cropProduct._id);
-  if (!createCrop) {
+  if (!createdCrop) {
     return next(new ErrorHandler("Crop creation failed", 500));
   }
   return res
